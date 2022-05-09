@@ -14,23 +14,27 @@ public class Solution {
         if(string.IsNullOrEmpty(digits)) return new List<string>();
         
         var ans = new List<string>();
-        ans.Add("");
-        
-        foreach(var number in digits)
-        {
-            var list = new List<string>();
-            
-            foreach(var s in ans)
-            {
-                foreach(var v in dict[number])
-                {
-                    list.Add(s + v);
-                }
-            }
-            
-            ans = list;
-        }
+        var list = new char[digits.Length];
+        DFS(digits, 0, list, ans, dict);
         
         return ans;
+    }
+    
+    private void DFS(string digits, int index, char[] list, IList<string> ans, Dictionary<char, List<char>> dict)
+    {
+        if(index == digits.Length)
+        {
+            ans.Add(new string(list));
+            return;
+        }
+        
+        foreach(var c in dict[digits[index]])
+        {
+            var original = list[index];
+            list[index] = c;
+            DFS(digits, index+1, list, ans, dict);
+            list[index] = original;
+            
+        }
     }
 }
