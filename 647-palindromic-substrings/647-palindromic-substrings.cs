@@ -1,27 +1,29 @@
-class Solution
-{
-    public int CountSubstrings(string s)
-    {
-        int ans = 0;
-        for (int i = 0; i < s.Length; i++)
+public class Solution {
+  
+    public int CountSubstrings(string s) {
+        var n = s.Length;
+        var ans = 0;
+        var memo = new bool[n,n];
+        
+        for(int len = 1;len <= n;len++)
         {
-
-            ans += SubCount(s,i,i);
-            ans += SubCount(s,i,i+1);
+            for(int l = 0; l+len-1 < n;l++)
+            {
+                var r = l + len-1;
+                if(IsPalindromic(s, l , r, memo))
+                {
+                    memo[l,r] = true;
+                    ans++;
+                }
+            }
         }
-
+        
         return ans;
     }
-
-    private int SubCount(string s, int start, int end)
+    
+    private bool IsPalindromic(string s, int l , int r, bool[,] memo)
     {
-        int ans = 0;
-        while (start >= 0 && end < s.Length && s[start] == s[end])
-        {
-            ans++;
-            start--;
-            end++;
-        }
-        return ans;
+        if(s[l] == s[r] && (r - l <=2 || memo[l+1,r-1])) return true;
+        return false;
     }
 }
