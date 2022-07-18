@@ -19,22 +19,19 @@ public class Node {
 
 public class Solution {
     public IList<int> Preorder(Node root) {
-        var res = new List<int>();
-        if(root == null) return res;
-        var stack = new Stack<Node>();
-        stack.Push(root);
-        
-        while(stack.Count > 0)
+        var ret = new List<int>();
+        Preorder(root,ret);
+        return ret;
+    }
+    
+    private void Preorder(Node node, IList<int> ret)
+    {
+        if(node==null) return;
+        ret.Add(node.val);
+        if(node.children == null) return;
+        foreach(var n in node.children)
         {
-            var node = stack.Pop();
-            res.Add(node.val);
-            if(node.children!=null)
-            {
-                for(int i=node.children.Count -1 ; i>=0;i--)
-                    stack.Push(node.children[i]);    
-            }
+            Preorder(n, ret);
         }
-        
-        return res;
     }
 }
