@@ -1,18 +1,16 @@
 class Solution {
     public bool IsPalindrome (int x) {
-        if (x == int.MinValue) return false;
+        if (x == 0) return true;
+        if (x < 0 || x%10 == 0) return false;
 
-        long y = Math.Abs (x);
-        long value = 0;
+        int reversed_x = 0;
 
-        while (y > 0) {
-            value *= 10;
-            value += (y % 10);
-            y /= 10;
+        while (x > reversed_x) {
+            reversed_x = reversed_x*10 +(x%10);
+            x /= 10;
         }
 
-        if (value > int.MaxValue) return false;
-
-        return x == (int) value ? true : false;
+        if (x == reversed_x ||x == reversed_x/10 ) return true;
+        else return false;
     }
 }
