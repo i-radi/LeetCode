@@ -4,24 +4,30 @@ public class Solution {
         if(string.IsNullOrWhiteSpace(s) && string.IsNullOrWhiteSpace(t)) return true;
         if(string.IsNullOrWhiteSpace(s) || string.IsNullOrWhiteSpace(t)) return false;
         
-        return Convert(s).Equals(Convert(t));
-    }
-    
-    private string Convert(string s)
-    {
-        var stack = new Stack<char>();
-        foreach(var c in s)
+        int p1 = s.Length - 1, p2 = t.Length - 1;
+        int skipS = 0, skipT = 0;
+        
+        while(p1 >= 0 || p2 >= 0)
         {
-            if(c == '#' && stack.Count() > 0)
-                stack.Pop();
-            else if(c!= '#')
-                stack.Push(c);
+            while( p1 >= 0)
+            {
+                if(s[p1] == '#')  { skipS++; p1--;}
+                else if(skipS > 0){ skipS--; p1--;}
+                else break;
+            }
+            
+            while( p2 >= 0)
+            {
+                if(t[p2] == '#')  { skipT++; p2--;}
+                else if(skipT > 0){ skipT--; p2--;}
+                else break;
+            }
+            
+            if(p1>=0 && p2>=0 && s[p1] != t[p2]) return false;
+            if(p1>=0 != p2>=0) return false;
+            p1--; p2--;
         }
         
-        var sb = new StringBuilder();
-        while(stack.Count > 0)
-            sb.Append(stack.Pop());
-        
-        return sb.ToString();
+        return true;
     }
 }
