@@ -11,15 +11,13 @@
  */
 public class Solution {
     public bool HasCycle(ListNode head) {
-        var s = head;
-        var f = head;
-        
-        while(f!=null && f.next!=null){
-            f = f.next.next;
-            s = s.next;
-            if(f == s) return true;
+        var p  = head;
+        var set = new HashSet<ListNode>();
+        while(p!=null){
+            if(set.Contains(p)) return true;
+            set.Add(p);
+            p = p.next;
         }
-        
         return false;
     }
 }
