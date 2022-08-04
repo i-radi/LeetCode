@@ -11,21 +11,24 @@
  *     }
  * }
  */
-class Solution
-{
-    public int FindBottomLeftValue(TreeNode root)
+public class Solution {
+    private int _ans = 0;
+    private int _level = 0;
+    public int FindBottomLeftValue(TreeNode root) {
+        Traverse(root, 1);
+        return _ans;
+    }
+    
+    private void Traverse(TreeNode node, int level)
     {
-        var queue = new Queue<TreeNode>();
-        TreeNode mostLeft = null;
-        queue.Enqueue(root);
-
-        while(queue.Count > 0)
+        if(node == null) return;
+        if(level > _level)
         {
-            mostLeft = queue.Dequeue();
-            if (mostLeft.right != null) queue.Enqueue(mostLeft.right);
-            if (mostLeft.left != null) queue.Enqueue(mostLeft.left);
+            _level = level;
+            _ans = node.val;
         }
-
-        return mostLeft.val;
+        
+        Traverse(node.left, level+1);
+        Traverse(node.right, level + 1);
     }
 }
