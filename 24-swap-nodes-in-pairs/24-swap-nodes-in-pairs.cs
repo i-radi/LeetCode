@@ -12,10 +12,18 @@
 
 public class Solution {
     public ListNode SwapPairs(ListNode head) {
-        if(head == null || head.next == null) return head;
-        var p = head.next;
-        head.next = SwapPairs(head.next.next);
-        p.next = head;
-        return p;
+        var temp = new ListNode();
+        temp.next = head;
+        var current = temp;
+        
+        while(current.next != null && current.next.next != null){
+            var firstNode = current.next;
+            var secondNode = current.next.next;
+            firstNode.next = secondNode.next;
+            current.next = secondNode;
+            current.next.next = firstNode;
+            current = current.next.next;
+        }
+        return temp.next;
     }
 }
