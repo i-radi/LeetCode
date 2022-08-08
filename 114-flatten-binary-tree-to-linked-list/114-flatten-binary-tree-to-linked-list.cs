@@ -11,16 +11,18 @@
  *     }
  * }
  */
-class Solution {
+public class Solution {
+    public void Flatten(TreeNode root) {
+        if(root == null) return;
+        var left = root.left;
+        var right = root.right;
+        Flatten(root.left);
+        Flatten(root.right);
 
-    private TreeNode prev;
-    public void Flatten (TreeNode root) {
-        if (root == null) return;
-        Flatten (root.right);
-        Flatten (root.left);
-        
-        root.right = prev;
+        root.right = left;
         root.left = null;
-        prev = root;
+        var curr = root;
+        while(curr.right!=null) curr = curr.right;
+        curr.right = right;
     }
 }
