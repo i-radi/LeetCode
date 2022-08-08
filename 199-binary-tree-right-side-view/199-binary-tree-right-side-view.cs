@@ -12,27 +12,25 @@
  * }
  */
 public class Solution {
+    private Dictionary<int,int> levelToRightNode = new Dictionary<int,int>();
+    
     public IList<int> RightSideView(TreeNode root) {
+        RightSideView(root, 1);
         
-    List<int> list = new List<int>();
-    if(root == null) return list;
-    Queue<TreeNode> q = new Queue<TreeNode>();
-    q.Enqueue(root);
-    q.Enqueue(null);
-    list.Add(root.val);
-    while( q.Count() > 1 ){
-        
-        TreeNode temp = q.Dequeue();
-        
-        if(temp == null){
-            q.Enqueue(null);
-            TreeNode t = q.Peek();
-            list.Add(t.val);
-            continue;
+        var ans = new List<int>();
+        for(int i=0;i<levelToRightNode.Count;i++)
+        {
+            ans.Add(levelToRightNode[i+1]);
         }
-        if(temp.right != null) q.Enqueue(temp.right);
-        if(temp.left != null) q.Enqueue(temp.left);
+        
+        return ans;
     }
-    return list;    
+    
+    private void RightSideView(TreeNode node, int level)
+    {
+        if(node == null) return;
+        if(!levelToRightNode.ContainsKey(level)) levelToRightNode.Add(level, node.val);
+        RightSideView(node.right, level+1);
+        RightSideView(node.left, level+1);
     }
 }
