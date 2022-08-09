@@ -2,12 +2,14 @@ public class Solution {
     public int NumJewelsInStones(string J, string S) {
         int ans = 0;
         if(String.IsNullOrEmpty(J) || String.IsNullOrEmpty(S)) return ans;
-        foreach(var jewel in J){
-            foreach(var stone in S){
-                if(jewel.Equals(stone)){
-                    ans++;
-                }
-            }
+        var set = new HashSet<char>();
+        foreach (var c in J)
+        {
+            set.Add(c);
+        }
+
+        foreach(var c in S){
+            if(set.Contains(c)) ans++;
         }
         
         return ans;
