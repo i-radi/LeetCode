@@ -12,19 +12,18 @@
  * }
  */
 public class Solution {
+    private int res = 0;
     public int SumOfLeftLeaves(TreeNode root) {
-        if(root == null) return 0;
-        return SumOfLeftLeaves(root.left, true) + SumOfLeftLeaves(root.right, false);
+        Traverse(root.left, true);
+        Traverse(root.right, false);
+        return res;
         
     }
     
-    private int SumOfLeftLeaves(TreeNode node, bool isLeft)
-    {
-        if(node == null) return 0;
-        if(node.left == null && node.right == null && isLeft){
-            return node.val;
-        }
-        
-        return SumOfLeftLeaves(node.left, true) + SumOfLeftLeaves(node.right, false);
+    public void Traverse(TreeNode node, bool isLeft) {
+        if(node == null) return;
+        if(isLeft && node.left == null && node.right == null) res += node.val;
+        Traverse(node.left, true);
+        Traverse(node.right, false);
     }
 }
