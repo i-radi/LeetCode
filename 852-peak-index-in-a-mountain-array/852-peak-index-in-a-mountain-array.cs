@@ -1,9 +1,18 @@
 public class Solution {
+    //Find the smallest l such that arr[l] > arr[l + 1].
+
     public int PeakIndexInMountainArray(int[] arr) {
-        for (int i =1;i<=arr.Length;i++){
-            if (arr[i-1]<arr[i]) continue;
-            return i-1;
+        var l = 0;
+        var r = arr.Length;
+        while(l < r){
+            var m = (r-l)/2 + l;
+            if(arr[m] > arr[m+1]){
+                r = m;
+            }else{
+                l = m + 1;
+            }
         }
-        return -1;
+        
+        return l;
     }
 }
