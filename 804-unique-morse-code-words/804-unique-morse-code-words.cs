@@ -3,11 +3,11 @@ public class Solution {
         string[] morse = new string[]{".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
         var set = new HashSet<string>();
         foreach (var word in words){
-            string str = "";
+            var str = new StringBuilder();
             foreach (var ch in word){
-                str += morse[ch - 'a'];
+                str.Append(morse[ch - 'a']);
             }
-            set.Add(str);
+            set.Add(str.ToString());
         }
         return set.Count();
     }
