@@ -1,15 +1,23 @@
 public class Solution {
     public bool SearchMatrix(int[][] matrix, int target) {
-        int row = matrix.Length-1;
-        for(int i = 1; i<matrix.Length; i++)
-            if (target < matrix[i][0]) {
-                row = i-1;
-                break;
-            }
-                       
-        for(int j =0; j<matrix[row].Length; j++)
-            if (target == matrix[row][j]) return true;
+        var m = matrix.Length;
+        if(m == 0) return false;
         
-        return false;
+        var n = matrix[0].Length;
+        var l = 0;
+        var r = m * n;
+        
+        while(l < r)
+        {
+            var mid = (r-l)/2 + l;
+            if(matrix[mid/n][mid%n] > target)
+                r = mid;
+            else 
+                l = mid+1;
+        }
+        
+        l = l-1;
+        if(l >= 0 && matrix[l/n][l%n] == target) return true;
+        else return false;
     }
 }
