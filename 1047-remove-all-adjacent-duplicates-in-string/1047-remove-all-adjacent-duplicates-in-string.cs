@@ -14,11 +14,8 @@ public class Solution {
                 }
             }
         }
-        
-        var chars = new char[stack.Count];
-        for(int i=chars.Length-1;i>=0;i--)
-            chars[i] = stack.Pop();
-        
-        return new String(chars);
+        var str = stack.ToArray();
+        Array.Reverse(str);
+        return new string(str);
     }
 }
