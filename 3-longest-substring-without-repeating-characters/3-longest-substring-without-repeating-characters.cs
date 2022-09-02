@@ -6,14 +6,18 @@ public class Solution {
         var ans = 0;
         while(r < s.Length)
         {
-            arr[s[r]]++;
-            
-            while(arr[s[r]] > 1)
+            if(arr[s[r]] == 0)
             {
-                arr[s[l++]]--;
+                arr[s[r]]++;
+                ans = Math.Max(ans, r-l+1);
+            }else{
+                while(s[l] != s[r])
+                {
+                    arr[s[l++]]--;
+                }
+                l++;
             }
             
-            ans = Math.Max(ans, r - l + 1);
             r++;
         }
         
