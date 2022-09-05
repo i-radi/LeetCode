@@ -1,19 +1,16 @@
 public class Solution {
-    public int SubarraySum(int[] nums, int k) {
-        var ans = 0;
-        var presum = new int[nums.Length+1];
-        
-        for(int i=0;i<nums.Length;i++){
-            presum[i+1] = presum[i] + nums[i];
-        }
-        
-        for(int start = 0;start < nums.Length; start++)
-        {
-            for(int end=start+1;end <= nums.Length;end++){
-                if((presum[end] - presum[start]) == k) ans++;
-            }
-        }
-        
-        return ans;
-    }
+   public int SubarraySum(int[] nums, int k) {       
+     
+       var count = 0;
+       for(int start=0;start<nums.Length;start++)
+       {
+           var sum = 0;
+           for(int end=start;end<nums.Length;end++){
+               sum += nums[end];
+               if(sum == k) count++;
+           }
+       }
+
+       return count;
+   }
 }
