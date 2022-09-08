@@ -1,7 +1,5 @@
 public class Solution {
     public int RomanToInt(string s) {
-        if(String.IsNullOrEmpty(s)) return 0;
-        
         var dict = new Dictionary<char,int>();
         dict.Add('I',1);
         dict.Add('V',5);
@@ -13,27 +11,26 @@ public class Solution {
         
         var ans = 0;
         var index = 0;
-        while(index < s.Length){
-            if(index + 1 < s.Length){
-                
-                int currVal = dict[s[index]];
-                int nextVal = dict[s[index+1]];
-                
-                if(currVal >= nextVal){
-                    ans += currVal;
-                }else{
-                    ans += (nextVal - currVal);
-                    index++;
-                }
-                
-                index++;
-                
+        
+        while(index < s.Length-1)
+        {
+            var c = s[index];
+            var n = s[index+1];
+            
+            if((c == 'I' && (n == 'V' || n == 'X')) || 
+               (c == 'X' && (n == 'L' || n == 'C')) || 
+               (c == 'C' && (n == 'D' || n == 'M')))
+            {
+                ans += dict[n] - dict[c];
+                index+=2;
             }else{
-                ans += dict[s[index++]];
-            }
+                ans += dict[c];
+                index++;
+            }   
         }
         
-        return ans;
+        if(index == s.Length-1) ans += dict[s[s.Length-1]];
         
+        return ans;
     }
 }
