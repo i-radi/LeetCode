@@ -1,15 +1,10 @@
 public class Solution {
+    Dictionary<int,int> cache = new Dictionary<int,int>();
     public int ClimbStairs(int n) {
-        if(n < 2) return 1;
-        int prev2 = 1; 
-        int prev1 = 1;
-        int curr = 0;
-        for(int i=2;i<=n;i++){
-            curr = prev2 + prev1;
-            prev2 = prev1;
-            prev1 = curr;
-        }
-
-        return curr;
+        if(n <= 1) return 1;
+        if(cache.ContainsKey(n)) return cache[n];
+        var r = ClimbStairs(n-1) + ClimbStairs(n-2);
+        cache.Add(n,r);
+        return r;
     }
 }
