@@ -1,6 +1,12 @@
 public class Solution {
-    public bool IsPowerOfThree(int n) {
-        if(n==0) return false;
-        return n == Math.Pow(3,Math.Round(Math.Log(n)/Math.Log(3)));
-    }
+   public bool IsPowerOfThree(int n) {
+       return IsThreePower(n);
+   }
+  
+   private bool IsThreePower(double n)
+   {
+       if(n == 1) return true;
+       if(n < 3) return false;
+       return IsThreePower(n/3);
+   }
 }
