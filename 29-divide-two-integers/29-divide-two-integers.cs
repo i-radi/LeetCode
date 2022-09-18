@@ -1,18 +1,27 @@
-public class Solution {
+class Solution {
     public int Divide(int dividend, int divisor) {
-
-        if(dividend == Int32.MinValue && divisor==-1){
-            return Int32.MaxValue;
-        }
-        if(dividend/divisor > Int32.MaxValue){
-            return Int32.MaxValue;
-        }
-        else if(dividend/divisor < Int32.MinValue){
-            return Int32.MinValue;
-        }
-        else{
-            return dividend/divisor;
-        }
+        int sign = (dividend < 0) ^ (divisor < 0) ? -1 : 1;
+        long ldividend = Math.Abs((long)dividend);
+        long ldivisor = Math.Abs((long)divisor);
         
+        long ans = 0;
+        while(ldivisor <= ldividend) {
+            long tmp = ldivisor;
+            long mul = 1;
+            while(ldividend >= (tmp << 1)) {
+                tmp <<= 1;
+                mul <<= 1;
+            }
+            
+            ans += mul;
+            ldividend -= tmp;}
+        
+        ans *= sign;
+        
+        if(ans >= Int32.MaxValue) {
+            return Int32.MaxValue;
+        }else{
+            return (int) ans;
+        }
     }
 }
