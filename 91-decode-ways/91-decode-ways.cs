@@ -1,25 +1,31 @@
-//Recursion + Memoization to avoid duplicate computation
+//DP
 public class Solution {
-    private Dictionary<string,int> dict = new Dictionary<string,int>();
     public int NumDecodings(string s) {
-        dict.Add("",1);
-        return Ways(s);
-    }
-
-    private int Ways(string s){
-        if(dict.ContainsKey(s)) return dict[s];
-        if(s[0] == '0') return 0;
+        if(s == null || s[0] == '0') return 0;
         if(s.Length == 1) return 1;
 
-        var ans = Ways(s.Substring(1));
-        var twoDigital = Convert.ToInt32(s.Substring(0,2));
-        if(twoDigital <= 26 && twoDigital >= 10){
-            ans += Ways(s.Substring(2));
-        } 
+        int n = s.Length;
+        int w1 = 1;
+        int w2 = 1;
 
-        dict.Add(s,ans);
+        for(int i=1;i<n;i++){
+            int w = 0;
+            if(!IsValid(s[i]) && !IsValid(s[i-1],s[i])) return 0;
+            if(IsValid(s[i])) w = w1;
+            if(IsValid(s[i-1],s[i])) w += w2;
+            w2 = w1;
+            w1 = w;
+        }       
 
-        return ans;
+        return w1;
+    }
 
+    private bool IsValid(char c){
+        return c != '0';
+    }
+
+    private bool IsValid(char c1, char c2){
+        var i = (c1 - '0') * 10 + (c2 - '0');
+        return i >= 10 && i <= 26;
     }
 }
