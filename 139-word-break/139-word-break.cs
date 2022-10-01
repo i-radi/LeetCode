@@ -1,24 +1,31 @@
 public class Solution {
-    public bool WordBreak(string s, IList<string> wordDict)
-    {
-        if (string.IsNullOrWhiteSpace(s)) return false;
+    public bool WordBreak(string s, IList<string> wordDict) {
         var set = new HashSet<string>(wordDict);
-        var dp = new bool[s.Length + 1];
-        dp[0] = true;
-
-        for (int i = 1; i <= s.Length; i++)
-        {
-            for (int j = 0; j < i; j++)
-            {
-                var canBreak = dp[j] && set.Contains(s.Substring(j, i - j));
-                if (canBreak)
-                {
-                    dp[i] = true;
-                    break;
-                }
+        var dict = new Dictionary<string,bool>();
+        return WordBreak(s, set, dict);
+    }
+    
+    private bool WordBreak(string s, HashSet<string> set, Dictionary<string,bool> dict)
+    {
+        if(dict.ContainsKey(s)) return dict[s];
+        
+        if(set.Contains(s)){
+            dict.Add(s,true);
+            return true;
+        }
+        
+        for(int i=1;i<s.Length;i++)
+        { 
+            var first = s.Substring(0,i);
+            var second = s.Substring(i);
+            
+            if(WordBreak(first, set, dict) && set.Contains(second)){
+                dict.Add(s,true);
+                return true;
             }
         }
-
-        return dp[dp.Length - 1];
+        
+        dict.Add(s,false);
+        return false;
     }
 }
