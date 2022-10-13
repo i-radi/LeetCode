@@ -1,30 +1,32 @@
 public class Solution {
     public int LengthOfLIS(int[] nums) {
-        if(nums == null || nums.Length == 0) return 0;
         if(nums.Length == 1) return 1;
-        var dict = new Dictionary<int,int>();
-        dict[0] = 1;
-        
-        var ans = 1;
-        for(int i=0;i<nums.Length;i++){
-            ans = Math.Max(ans,LengthOfLIS(nums, i, dict));
+        var dp = new List<int>();
+        for(int i=0;i<nums.Length;i++)
+        {
+            var pos = BinarySearch(dp,nums[i]);
+            if(pos == dp.Count)
+                dp.Add(nums[i]);
+            else
+                dp[pos] = nums[i];
         }
         
-        return ans;
+        return dp.Count();
     }
     
-    private int LengthOfLIS(int[] nums, int index, Dictionary<int,int> dict)
+    private int BinarySearch(List<int> list, int target)
     {
-        if(dict.ContainsKey(index)) return dict[index];
-        var v = 1;
-        for(int i=0;i<index;i++)
+        var l = 0;
+        var r = list.Count;
+        while(l < r)
         {
-            if(nums[index] > nums[i]){
-                v = Math.Max(v, LengthOfLIS(nums, i, dict) + 1);
-            }
+            var mid = (r-l)/2 + l;
+            if(list[mid] >= target)
+                r = mid;
+            else
+                l = mid+1;
         }
         
-        dict[index] = v;
-        return v;
+        return l;
     }
 }
