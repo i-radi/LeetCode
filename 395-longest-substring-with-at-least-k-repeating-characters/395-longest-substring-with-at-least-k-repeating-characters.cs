@@ -1,62 +1,36 @@
 public class Solution {
     public int LongestSubstring(string s, int k) {
-        var counters = new int[26];
-        var maxUnique = MaxUnique(s);
-        int ans = 0;
+        if(string.IsNullOrEmpty(s) || s.Length < k) return 0;
         
-        for(int currUnique = 1; currUnique <= maxUnique; currUnique++)
+        var counters = new int[26];
+        var ans = 0;
+        
+        for(int start = 0; start < s.Length; start++)
         {
             Array.Fill(counters, 0);
-            var start = 0;
-            var end = 0;
-            var idx = 0;
-            var unique = 0;
-            var countAtLeastK = 0;
-            
-            while(end < s.Length)
+            for(int end = start; end < s.Length; end++)
             {
-                //expand the window
-                if(unique <= currUnique)
+                counters[s[end] - 'a']++;
+                if(IsValid(s, k, counters))
                 {
-                    idx = s[end] - 'a';
-                    if(counters[idx] == 0) unique++;
-                    counters[idx]++;
-                    if(counters[idx] == k) countAtLeastK++;
-                    end++;
-                }
-                else
-                {
-                    //shrink the window
-                    idx = s[start] - 'a';
-                    if(counters[idx] == k) countAtLeastK--;
-                    counters[idx]--;
-                    if(counters[idx] == 0) unique--;
-                    start++;
-                }
-                
-                if(unique == currUnique && unique == countAtLeastK){
-                    ans = Math.Max(ans, end - start);
+                    ans = Math.Max(ans, end - start + 1);
                 }
             }
         }
         
         return ans;
-        
     }
     
-    private int MaxUnique(string s)
+    private bool IsValid(string s, int k, int[] counters)
     {
-        var count = 0;
-        var counters = new bool[26];
-        foreach(var c in s)
+        var letters = 0;
+        var atLeastKs = 0;
+        foreach(var v in counters)
         {
-            if(!counters[c - 'a'])
-            {
-                count++;
-                counters[c - 'a'] = true;
-            }
+            if(v > 0) letters++;
+            if(v >= k) atLeastKs++;
         }
         
-        return count;
+        return letters == atLeastKs;
     }
 }
