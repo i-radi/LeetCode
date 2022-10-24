@@ -5,16 +5,16 @@
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
 <img alt="" src="https://assets.leetcode.com/uploads/2021/03/18/sum-grid.jpg" style="width: 255px; height: 176px;">
-<pre><strong>Input:</strong> matrix = [[1,0,1],[0,-2,3]], k = 2
+<pre style="position: relative;"><strong>Input:</strong> matrix = [[1,0,1],[0,-2,3]], k = 2
 <strong>Output:</strong> 2
 <strong>Explanation:</strong> Because the sum of the blue rectangle [[0, 1], [-2, 3]] is 2, and 2 is the max number no larger than k (k = 2).
-</pre>
+<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
 
 <p><strong class="example">Example 2:</strong></p>
 
-<pre><strong>Input:</strong> matrix = [[2,2,-1]], k = 3
+<pre style="position: relative;"><strong>Input:</strong> matrix = [[2,2,-1]], k = 3
 <strong>Output:</strong> 3
-</pre>
+<div class="open_grepper_editor" title="Edit &amp; Save To Grepper"></div></pre>
 
 <p>&nbsp;</p>
 <p><strong>Constraints:</strong></p>
